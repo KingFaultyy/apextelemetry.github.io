@@ -209,7 +209,19 @@ footer{margin-top:60px;text-align:center;padding:20px;color:#888;font-size:0.9re
 <footer>© 2026 ApexTelemetry. All Rights Reserved. | <a href="#" style="color:#00f0ff;text-decoration:none;">Privacy</a></footer>
 
 <script>
-// Tab switching
+// Redirect if not logged in
+const loggedIn = JSON.parse(localStorage.getItem('loggedInUser'));
+if(!loggedIn){ window.location.href='login.html'; }
+
+// Update CTA button to show logged-in user
+document.addEventListener('DOMContentLoaded',()=>{
+  const user = loggedIn.username;
+  const dashboardBtn = document.querySelector('.hero .secondary');
+  dashboardBtn.textContent = `Welcome, ${user}`;
+  dashboardBtn.onclick = () => alert(`Welcome back, ${user}!`);
+});
+  
+  // Tab switching
 const tabs = document.querySelectorAll('.tab');
 const sections = document.querySelectorAll('main section');
 tabs.forEach(tab => {
