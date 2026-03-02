@@ -1,191 +1,260 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ApexTelemetry</title>
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    /* General Reset */
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; }
-    body { background-color: #121212; color: #fff; display: flex; min-height: 100vh; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ApexTelemetry</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* --- General Reset --- */
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; }
+body { background-color: #121212; color: #fff; display: flex; min-height: 100vh; }
 
-    /* Header */
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 60px;
-      background-color: #1a1a1a;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 20px;
-      z-index: 1000;
-      border-bottom: 2px solid #00f0ff;
-    }
-    .logo { font-size: 1.6rem; font-weight: 700; letter-spacing: 1px; }
-    .sponsors img { height: 40px; margin-left: 15px; filter: brightness(1.2); }
+/* --- Header --- */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background-color: #1a1a1a;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  z-index: 1000;
+  border-bottom: 2px solid #00f0ff;
+}
+.logo { font-size: 1.6rem; font-weight: 700; letter-spacing: 1px; }
+.sponsors img { height: 40px; margin-left: 15px; filter: brightness(1.2); }
 
-    /* Side Tabs */
-    .side-tabs {
-      position: fixed;
-      top: 60px;
-      right: 0;
-      width: 200px;
-      height: calc(100% - 60px);
-      background-color: #1b1b1b;
-      display: flex;
-      flex-direction: column;
-      padding-top: 20px;
-      border-left: 2px solid #00f0ff;
-    }
-    .tab { padding: 15px 20px; cursor: pointer; display: flex; align-items: center; transition: all 0.2s; font-weight: 500; }
-    .tab:hover { background-color: #222; border-left: 4px solid #00f0ff; transform: translateX(-2px); }
-    .tab.active { background-color: #222; border-left: 4px solid #00f0ff; font-weight: 700; }
-    .tab span { margin-left: 10px; }
+/* --- Side Tabs --- */
+.side-tabs {
+  position: fixed;
+  top: 60px;
+  right: 0;
+  width: 200px;
+  height: calc(100% - 60px);
+  background-color: #1b1b1b;
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+  border-left: 2px solid #00f0ff;
+  z-index: 900;
+}
+.tab {
+  padding: 15px 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: all 0.2s;
+  font-weight: 500;
+}
+.tab:hover { background-color: #222; border-left: 4px solid #00f0ff; transform: translateX(-2px); }
+.tab.active { background-color: #222; border-left: 4px solid #00f0ff; font-weight: 700; }
+.tab span { margin-left: 10px; }
 
-    /* Main Content */
-    main { margin-left: 40px; margin-right: 220px; padding-top: 80px; flex: 1; }
-    
-    /* Hero Section */
-    .hero {
-      background: url('https://images.unsplash.com/photo-1603901394390-0b6cebe49b3b?auto=format&fit=crop&w=1650&q=80') center/cover no-repeat;
-      height: 400px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding-left: 40px;
-      border-radius: 10px;
-      margin-bottom: 40px;
-      color: #fff;
-      text-shadow: 1px 1px 5px #000;
-    }
-    .hero h1 { font-size: 3rem; margin-bottom: 10px; }
-    .hero p { font-size: 1.2rem; margin-bottom: 20px; }
-    .hero .cta { display: flex; gap: 15px; }
-    .hero .cta button { padding: 10px 20px; border: none; border-radius: 5px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
-    .hero .cta .primary { background-color: #00f0ff; color: #121212; }
-    .hero .cta .primary:hover { background-color: #00cfff; }
-    .hero .cta .secondary { background-color: #ff8c00; color: #121212; }
-    .hero .cta .secondary:hover { background-color: #e07b00; }
+/* --- Main Content --- */
+main { margin-left: 40px; margin-right: 220px; padding-top: 80px; flex: 1; }
 
-    /* Featured Stats */
-    .stats { display: flex; gap: 20px; margin-bottom: 40px; flex-wrap: wrap; }
-    .card {
-      background-color: #1b1b1b;
-      padding: 20px;
-      border-radius: 10px;
-      flex: 1 1 200px;
-      box-shadow: 0 0 10px #000;
-      transition: transform 0.2s;
-    }
-    .card:hover { transform: translateY(-5px); border-left: 4px solid #00f0ff; }
-    .card h3 { margin-bottom: 10px; font-size: 1.2rem; color: #00f0ff; }
-    .card p { font-size: 1rem; }
+section { display: none; margin-bottom: 40px; }
+section.active { display: block; }
 
-    /* Mini Leaderboard */
-    .leaderboard { background-color: #1b1b1b; padding: 20px; border-radius: 10px; }
-    .leaderboard h2 { font-size: 1.5rem; color: #00f0ff; margin-bottom: 15px; }
-    table { width: 100%; border-collapse: collapse; }
-    table th, table td { padding: 10px; text-align: left; }
-    table th { border-bottom: 2px solid #00f0ff; }
-    table tr:nth-child(1) td { color: #ffd700; font-weight: 700; }
-    table tr:nth-child(2) td { color: #c0c0c0; font-weight: 700; }
-    table tr:nth-child(3) td { color: #cd7f32; font-weight: 700; }
+/* --- Hero Section --- */
+.hero {
+  background: url('https://images.unsplash.com/photo-1603901394390-0b6cebe49b3b?auto=format&fit=crop&w=1650&q=80') center/cover no-repeat;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 40px;
+  border-radius: 10px;
+  color: #fff;
+  text-shadow: 1px 1px 5px #000;
+}
+.hero h1 { font-size: 3rem; margin-bottom: 10px; }
+.hero p { font-size: 1.2rem; margin-bottom: 20px; }
+.hero .cta { display: flex; gap: 15px; }
+.hero .cta button { padding: 10px 20px; border: none; border-radius: 5px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+.hero .cta .primary { background-color: #00f0ff; color: #121212; }
+.hero .cta .primary:hover { background-color: #00cfff; }
+.hero .cta .secondary { background-color: #ff8c00; color: #121212; }
+.hero .cta .secondary:hover { background-color: #e07b00; }
 
-    /* Footer */
-    footer { margin-top: 60px; text-align: center; padding: 20px; color: #888; font-size: 0.9rem; }
+/* --- Cards / Stats --- */
+.stats { display: flex; gap: 20px; margin-bottom: 40px; flex-wrap: wrap; }
+.card {
+  background-color: #1b1b1b;
+  padding: 20px;
+  border-radius: 10px;
+  flex: 1 1 200px;
+  box-shadow: 0 0 10px #000;
+  transition: transform 0.2s;
+}
+.card:hover { transform: translateY(-5px); border-left: 4px solid #00f0ff; }
+.card h3 { margin-bottom: 10px; font-size: 1.2rem; color: #00f0ff; }
+.card p { font-size: 1rem; }
 
-    /* Responsive */
-    @media (max-width: 992px) {
-      .side-tabs { width: 150px; }
-      main { margin-right: 160px; }
-    }
-    @media (max-width: 768px) {
-      .side-tabs { display: none; }
-      main { margin: 0; padding-top: 80px; }
-      .hero { padding-left: 20px; }
-    }
-  </style>
+/* --- Mini Leaderboard --- */
+.leaderboard { background-color: #1b1b1b; padding: 20px; border-radius: 10px; }
+.leaderboard h2 { font-size: 1.5rem; color: #00f0ff; margin-bottom: 15px; }
+table { width: 100%; border-collapse: collapse; }
+table th, table td { padding: 10px; text-align: left; }
+table th { border-bottom: 2px solid #00f0ff; }
+table tr:nth-child(1) td { color: #ffd700; font-weight: 700; }
+table tr:nth-child(2) td { color: #c0c0c0; font-weight: 700; }
+table tr:nth-child(3) td { color: #cd7f32; font-weight: 700; }
+
+/* --- Footer --- */
+footer { margin-top: 60px; text-align: center; padding: 20px; color: #888; font-size: 0.9rem; }
+
+/* --- Responsive --- */
+@media (max-width: 992px) {
+  .side-tabs { width: 150px; }
+  main { margin-right: 160px; }
+}
+@media (max-width: 768px) {
+  .side-tabs { display: none; }
+  main { margin: 0; padding-top: 80px; }
+  .hero { padding-left: 20px; }
+}
+</style>
 </head>
 <body>
 
-  <!-- Header -->
-  <header>
-    <div class="logo">ApexTelemetry</div>
-    <div class="sponsors">
-      <img src="https://via.placeholder.com/80x40?text=Partner1" alt="Sponsor1">
-      <img src="https://via.placeholder.com/80x40?text=Partner2" alt="Sponsor2">
-    </div>
-  </header>
-
-  <!-- Right-Side Tabs -->
-  <div class="side-tabs">
-    <div class="tab active">🏠 <span>Home</span></div>
-    <div class="tab">🏆 <span>Leaderboards</span></div>
-    <div class="tab">📊 <span>Race Analytics</span></div>
-    <div class="tab">👤 <span>Drivers</span></div>
-    <div class="tab">🏎️ <span>Karts</span></div>
-    <div class="tab">🗺️ <span>Tracks</span></div>
-    <div class="tab">🏁 <span>Upcoming Competitions</span></div>
-    <div class="tab">🎫 <span>Karting Licenses</span></div>
-    <div class="tab">⚡ <span>Leagues</span></div>
-    <div class="tab">📘 <span>Tips & Tutorials</span></div>
-    <div class="tab">ℹ️ <span>About</span></div>
-    <div class="tab">✉️ <span>Contact</span></div>
+<!-- Header -->
+<header>
+  <div class="logo">ApexTelemetry</div>
+  <div class="sponsors">
+    <img src="https://via.placeholder.com/80x40?text=Partner1" alt="Sponsor1">
+    <img src="https://via.placeholder.com/80x40?text=Partner2" alt="Sponsor2">
   </div>
+</header>
 
-  <!-- Main Content -->
-  <main>
-    <!-- Hero Section -->
-    <section class="hero">
-      <h1>Track Every Lap. Beat Every Record.</h1>
-      <p>Professional telemetry and leaderboards for competitive motorsport.</p>
-      <div class="cta">
-        <button class="primary">View Leaderboards</button>
-        <button class="secondary">Sign Up / Dashboard</button>
-      </div>
-    </section>
+<!-- Right-Side Tabs -->
+<div class="side-tabs">
+  <div class="tab active" data-target="home">🏠 <span>Home</span></div>
+  <div class="tab" data-target="leaderboards">🏆 <span>Leaderboards</span></div>
+  <div class="tab" data-target="analytics">📊 <span>Race Analytics</span></div>
+  <div class="tab" data-target="drivers">👤 <span>Drivers</span></div>
+  <div class="tab" data-target="karts">🏎️ <span>Karts</span></div>
+  <div class="tab" data-target="tracks">🗺️ <span>Tracks</span></div>
+  <div class="tab" data-target="competitions">🏁 <span>Upcoming Competitions</span></div>
+  <div class="tab" data-target="licenses">🎫 <span>Karting Licenses</span></div>
+  <div class="tab" data-target="leagues">⚡ <span>Leagues</span></div>
+  <div class="tab" data-target="tips">📘 <span>Tips & Tutorials</span></div>
+  <div class="tab" data-target="about">ℹ️ <span>About</span></div>
+  <div class="tab" data-target="contact">✉️ <span>Contact</span></div>
+</div>
 
-    <!-- Featured Stats -->
-    <section class="stats">
-      <div class="card">
-        <h3>Top Lap</h3>
-        <p>22.5s – John Doe</p>
-      </div>
-      <div class="card">
-        <h3>Fastest Average</h3>
-        <p>23.1s – Jane Smith</p>
-      </div>
-      <div class="card">
-        <h3>Upcoming Race</h3>
-        <p>Mar 10, K1 Speedway</p>
-      </div>
-      <div class="card">
-        <h3>Most Improved Driver</h3>
-        <p>Alex Lee – +0.6s improvement</p>
-      </div>
-    </section>
+<!-- Main Content -->
+<main>
+  <!-- Home -->
+  <section id="home" class="active hero">
+    <h1>Track Every Lap. Beat Every Record.</h1>
+    <p>Professional telemetry and leaderboards for competitive motorsport.</p>
+    <div class="cta">
+      <button class="primary">View Leaderboards</button>
+      <button class="secondary">Sign Up / Dashboard</button>
+    </div>
+  </section>
 
-    <!-- Mini Leaderboard -->
-    <section class="leaderboard">
-      <h2>Top Drivers</h2>
+  <!-- Leaderboards -->
+  <section id="leaderboards">
+    <h2>Top Drivers</h2>
+    <div class="leaderboard">
       <table>
         <tr><th>Rank</th><th>Driver</th><th>Best Lap</th></tr>
         <tr><td>1</td><td>John Doe</td><td>22.5s</td></tr>
         <tr><td>2</td><td>Jane Smith</td><td>22.7s</td></tr>
         <tr><td>3</td><td>Alex Lee</td><td>23.0s</td></tr>
       </table>
-    </section>
-  </main>
+    </div>
+  </section>
 
-  <!-- Footer -->
-  <footer>
-    © 2026 ApexTelemetry. All Rights Reserved. | <a href="#" style="color:#00f0ff;text-decoration:none;">Privacy</a>
-  </footer>
+  <!-- Race Analytics -->
+  <section id="analytics">
+    <h2>Race Analytics</h2>
+    <p>Detailed lap times, sector analysis, and driver comparison charts coming soon.</p>
+  </section>
+
+  <!-- Drivers -->
+  <section id="drivers">
+    <h2>Drivers</h2>
+    <p>Profiles, statistics, and performance tracking per driver.</p>
+  </section>
+
+  <!-- Karts -->
+  <section id="karts">
+    <h2>Karts</h2>
+    <p>Information on kart types, performance, and comparison.</p>
+  </section>
+
+  <!-- Tracks -->
+  <section id="tracks">
+    <h2>Tracks</h2>
+    <p>Track layouts, records, and best lap times per track.</p>
+  </section>
+
+  <!-- Upcoming Competitions -->
+  <section id="competitions">
+    <h2>Upcoming Competitions</h2>
+    <p>Calendar of races and registration instructions.</p>
+  </section>
+
+  <!-- Karting Licenses -->
+  <section id="licenses">
+    <h2>Karting Licenses</h2>
+    <p>Licensing info, renewals, and verification.</p>
+  </section>
+
+  <!-- Leagues -->
+  <section id="leagues">
+    <h2>Leagues</h2>
+    <p>Seasonal leagues, standings, and point tables.</p>
+  </section>
+
+  <!-- Tips & Tutorials -->
+  <section id="tips">
+    <h2>Tips & Tutorials</h2>
+    <p>Strategy, driving tutorials, and performance improvement guides.</p>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <h2>About ApexTelemetry</h2>
+    <p>Our mission is to provide professional telemetry and performance tracking for competitive motorsport.</p>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <h2>Contact</h2>
+    <p>Feedback, inquiries, or partnerships.</p>
+  </section>
+</main>
+
+<!-- Footer -->
+<footer>
+  © 2026 ApexTelemetry. All Rights Reserved. | <a href="#" style="color:#00f0ff;text-decoration:none;">Privacy</a>
+</footer>
+
+<!-- JS for Tab Switching -->
+<script>
+const tabs = document.querySelectorAll('.tab');
+const sections = document.querySelectorAll('main section');
+
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    // Remove active class from all tabs and sections
+    tabs.forEach(t => t.classList.remove('active'));
+    sections.forEach(s => s.classList.remove('active'));
+
+    // Add active to clicked tab and corresponding section
+    tab.classList.add('active');
+    document.getElementById(tab.dataset.target).classList.add('active');
+  });
+});
+</script>
 
 </body>
 </html>
