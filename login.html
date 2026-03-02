@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login - ApexTelemetry</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+body { font-family:'Montserrat',sans-serif; background:#121212; color:#fff; display:flex; justify-content:center; align-items:center; height:100vh; }
+.container { background:#1b1b1b; padding:40px; border-radius:10px; width:100%; max-width:400px; box-shadow:0 0 15px #000; }
+h1 { margin-bottom:20px; color:#00f0ff; }
+input { width:100%; padding:10px; margin:10px 0; border-radius:5px; border:none; }
+button { width:100%; padding:10px; background:#00f0ff; color:#121212; font-weight:600; border:none; border-radius:5px; cursor:pointer; transition:0.2s; }
+button:hover { background:#00cfff; }
+p { text-align:center; margin-top:15px; }
+a { color:#ff8c00; text-decoration:none; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Login</h1>
+  <input type="text" id="username" placeholder="Username or Email">
+  <input type="password" id="password" placeholder="Password">
+  <button onclick="login()">Login</button>
+  <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+</div>
+
+<script>
+function login() {
+  const user = document.getElementById('username').value;
+  const pass = document.getElementById('password').value;
+  if(!user || !pass){ alert('Please fill in all fields'); return; }
+
+  // Check if user exists in localStorage
+  const stored = JSON.parse(localStorage.getItem('users')||'[]');
+  const found = stored.find(u=>u.username===user && u.password===pass);
+  if(found){ 
+    localStorage.setItem('loggedInUser', JSON.stringify(found));
+    window.location.href = "dashboard.html";
+  } else { alert('Invalid username or password'); }
+}
+</script>
+</body>
+</html>
